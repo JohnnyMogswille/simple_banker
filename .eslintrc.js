@@ -16,7 +16,7 @@ module.exports = {
 		'no-console': process.env.NODE_ENV === 'production' ? 'warn' : 'off',
 		'no-debugger': process.env.NODE_ENV === 'production' ? 'warn' : 'off',
 		quotes: ['error', 'single'],
-		'vue/multi-word-component-names': ['error', { ignores: ['Home', 'Help'] }],
+		'vue/multi-word-component-names': ['error', { ignores: [] }],
 		'vue/html-indent': [
 			'error',
 			'tab',
@@ -25,7 +25,7 @@ module.exports = {
 				baseIndent: 1,
 				closeBracket: 0,
 				alignAttributesVertically: true,
-				ignores: [],
+				ignores: ['AuthView'],
 			},
 		],
 	},
