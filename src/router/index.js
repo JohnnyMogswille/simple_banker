@@ -20,6 +20,7 @@ const routes = [
 	{
 		path: '/auth',
 		name: 'Auth',
+		component: () => import('@/views/AuthView.vue'),
 		meta: {
 			layout: 'auth',
 		},

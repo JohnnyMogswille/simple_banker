@@ -1,5 +1,7 @@
 <template lang="">
-	<div class="card" />
+	<div class="container">
+		<router-view />
+	</div>
 </template>
 <script>
 export default {}
