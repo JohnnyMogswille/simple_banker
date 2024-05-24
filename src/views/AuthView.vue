@@ -1,10 +1,10 @@
 <template>
 	<form class="card" @submit.prevent="onSubmit">
 		<h1>Вход в систему</h1>
-		<div :class="['form-control', { invalid: loginError }]">
-			<label for="login">Логин</label>
-			<input id="login" v-model="login" type="text" @blur="loginBlur" />
-			<small v-if="loginError">{{ loginError }}</small>
+		<div :class="['form-control', { invalid: emailError }]">
+			<label for="email">Логин</label>
+			<input id="email" v-model="email" type="email" @blur="emailBlur" />
+			<small v-if="emailError">{{ emailError }}</small>
 		</div>
 		<div :class="['form-control', { invalid: passwordError }]">
 			<label for="password">Пароль</label>

@@ -7,21 +7,22 @@ import { useRouter } from 'vue-router'
 export function useLoginForm() {
 	// Сообщения
 	const REQUIRED_MESSAGE = 'Поле обязательно для заполнения'
-	const MIN_LENGTH_MESSAGE_8 = 'Поле должно содержать не менее 8 символов'
+	const PSWD_MESSAGE = 'Пароль должен содержать не менее 8 символов'
+	const EMAIL_MESSAGE = 'Пожалуйста, введите корректный email'
 	// vuex хранилище
 	const store = useStore()
 	// роутер
 	const router = useRouter()
 	// Чисто для формы
 	const { handleSubmit, isSubmitting, submitCount } = useForm()
-	// логин
+	// email
 	const {
-		value: login,
-		errorMessage: loginError,
-		handleBlur: loginBlur,
+		value: email,
+		errorMessage: emailError,
+		handleBlur: emailBlur,
 	} = useField(
-		'login',
-		yup.string().trim().required(REQUIRED_MESSAGE).min(8, MIN_LENGTH_MESSAGE_8)
+		'email',
+		yup.string().trim().required(REQUIRED_MESSAGE).email(EMAIL_MESSAGE)
 	)
 	// пароль
 	const {
@@ -30,7 +31,7 @@ export function useLoginForm() {
 		handleBlur: passwordBlur,
 	} = useField(
 		'password',
-		yup.string().trim().required(REQUIRED_MESSAGE).min(8, MIN_LENGTH_MESSAGE_8)
+		yup.string().trim().required(REQUIRED_MESSAGE).min(8, PSWD_MESSAGE)
 	)
 	// Определяем, сколько раз пытался войти
 	const isManyAttempts = computed(() => submitCount.value >= 3)
@@ -51,9 +52,9 @@ export function useLoginForm() {
 	})
 
 	return {
-		login,
-		loginError,
-		loginBlur,
+		email,
+		emailError,
+		emailBlur,
 		password,
 		passwordError,
 		passwordBlur,
