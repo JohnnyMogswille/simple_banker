@@ -1,4 +1,5 @@
 import { createRouter, createWebHistory } from 'vue-router'
+import store from '@/store'
 
 const routes = [
 	{
@@ -7,6 +8,7 @@ const routes = [
 		component: () => import('@/views/HomeView.vue'),
 		meta: {
 			layout: 'main',
+			auth: true,
 		},
 	},
 	{
@@ -15,6 +17,7 @@ const routes = [
 		component: () => import('@/views/HelpView.vue'),
 		meta: {
 			layout: 'main',
+			auth: true,
 		},
 	},
 	{
@@ -23,6 +26,7 @@ const routes = [
 		component: () => import('@/views/AuthView.vue'),
 		meta: {
 			layout: 'auth',
+			auth: false,
 		},
 	},
 ]
@@ -30,6 +34,18 @@ const routes = [
 const router = createRouter({
 	history: createWebHistory(process.env.BASE_URL),
 	routes,
+})
+
+router.beforeEach((to, from, next) => {
+	const requiredAuth = to.meta.auth
+
+	if (requiredAuth && store.getters['auth/isAuthenticated']) {
+		next()
+	} else if (requiredAuth && !store.getters['auth/isAuthenticated']) {
+		next('/auth?message=auth')
+	} else {
+		next()
+	}
 })
 
 export default router

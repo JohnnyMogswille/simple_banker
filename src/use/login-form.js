@@ -1,11 +1,17 @@
 import { computed, watch } from 'vue'
+import { useStore } from 'vuex'
 import * as yup from 'yup'
 import { useField, useForm } from 'vee-validate'
+import { useRouter } from 'vue-router'
 
 export function useLoginForm() {
 	// Сообщения
 	const REQUIRED_MESSAGE = 'Поле обязательно для заполнения'
 	const MIN_LENGTH_MESSAGE_8 = 'Поле должно содержать не менее 8 символов'
+	// vuex хранилище
+	const store = useStore()
+	// роутер
+	const router = useRouter()
 	// Чисто для формы
 	const { handleSubmit, isSubmitting, submitCount } = useForm()
 	// логин
@@ -39,8 +45,9 @@ export function useLoginForm() {
 	})
 
 	// Сабмит формы
-	const onSubmit = handleSubmit((values) => {
-		console.log('Form: ', values)
+	const onSubmit = handleSubmit(async (values) => {
+		await store.dispatch('auth/login', values)
+		router.push({ name: 'Home' })
 	})
 
 	return {
