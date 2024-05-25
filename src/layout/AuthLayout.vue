@@ -1,9 +1,13 @@
 <template lang="">
 	<div class="container">
+		<app-message />
 		<router-view />
 	</div>
 </template>
 <script>
-export default {}
+import AppMessage from '@/components/ui/AppMessage.vue'
+export default {
+	components: { AppMessage },
+}
 </script>
 <style scoped></style>

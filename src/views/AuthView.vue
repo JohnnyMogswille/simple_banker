@@ -27,9 +27,22 @@
 	</form>
 </template>
 <script>
+import { useRoute } from 'vue-router'
+import { useStore } from 'vuex'
 import { useLoginForm } from '@/use/login-form'
+import errorAuth from '@/utils/errorAuth'
+
 export default {
 	setup() {
+		const route = useRoute()
+		const store = useStore()
+
+		if (route.query.message) {
+			store.dispatch('setMessage', {
+				value: errorAuth(route.query.message),
+				type: 'warning',
+			})
+		}
 		return { ...useLoginForm() }
 	},
 }

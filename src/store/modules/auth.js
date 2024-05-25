@@ -1,5 +1,4 @@
 import axios from 'axios'
-// eslint-disable-next-line no-unused-vars
 import errorAuth from '../../utils/errorAuth'
 
 const JWT_TOKEN = 'jwt-token'
@@ -31,7 +30,7 @@ export default {
 	},
 	actions: {
 		// eslint-disable-next-line no-unused-vars
-		async login({ commit }, payload) {
+		async login({ commit, dispatch }, payload) {
 			const API_KEY = process.env.VUE_APP_FB_KEY
 			const url = `https://identitytoolkit.googleapis.com/v1/accounts:signInWithPassword?key=${API_KEY}`
 
@@ -41,11 +40,19 @@ export default {
 					returnSecureToken: true,
 				})
 
-				// console.log(data)
-
 				commit('setToken', data.idToken)
+				commit('clearMessage', null, { root: true })
 			} catch (e) {
-				console.log(errorAuth(e.response.data.error.message))
+				dispatch(
+					'setMessage',
+					{
+						value: errorAuth(e.response.data.error.message),
+						type: 'danger',
+					},
+					{ root: true }
+				)
+
+				throw new Error()
 			}
 		},
 	},

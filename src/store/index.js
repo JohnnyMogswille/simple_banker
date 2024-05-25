@@ -9,10 +9,28 @@ if (process.env.NODE_ENV === 'development') {
 
 export default createStore({
 	plugins: plugins,
-	state: {},
+	state() {
+		return {
+			message: null,
+		}
+	},
 	getters: {},
-	mutations: {},
-	actions: {},
+	mutations: {
+		setMessage(state, message) {
+			state.message = message
+		},
+		clearMessage(state) {
+			state.message = null
+		},
+	},
+	actions: {
+		setMessage({ commit }, message) {
+			commit('setMessage', message)
+			setTimeout(() => {
+				commit('clearMessage')
+			}, 5000)
+		},
+	},
 	modules: {
 		auth,
 	},
