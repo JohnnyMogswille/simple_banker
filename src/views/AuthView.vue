@@ -2,7 +2,7 @@
 	<form class="card" @submit.prevent="onSubmit">
 		<h1>Вход в систему</h1>
 		<div :class="['form-control', { invalid: emailError }]">
-			<label for="email">Логин</label>
+			<label for="email">email</label>
 			<input id="email" v-model="email" type="email" @blur="emailBlur" />
 			<small v-if="emailError">{{ emailError }}</small>
 		</div>
