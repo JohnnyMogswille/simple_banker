@@ -1,13 +1,12 @@
 <template lang="">
-	<h4 v-if="expenses.length === 0" class="text-center">Заявок нет</h4>
-	<table v-else class="table">
+	<table v-if="deals && deals.length" class="table">
 		<thead>
 			<tr>
 				<th>№</th>
+				<th>Контрагент</th>
 				<th>Наименование</th>
-				<th>Количество</th>
-				<th>Цена за единицу</th>
-				<th>Сумма</th>
+				<th>Сумма, руб</th>
+				<th>Дата покупки</th>
 				<th>Статус</th>
 				<th>Действия</th>
 			</tr>
@@ -24,10 +23,15 @@
 			</tr>
 		</tbody>
 	</table>
+	<h4 v-else class="text-center">Сделок нет</h4>
 </template>
 <script>
 export default {
-	props: ['expenses'],
+	props: {
+		deals: {
+			type: Array
+		}
+	}
 }
 </script>
 <style lang=""></style>

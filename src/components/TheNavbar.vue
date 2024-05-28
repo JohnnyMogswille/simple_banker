@@ -3,7 +3,7 @@
 		<h3>Умный банкир</h3>
 		<ul class="navbar-menu">
 			<li>
-				<router-link :to="{ name: 'Home' }"> Заявки клиентов </router-link>
+				<router-link :to="{ name: 'Home' }"> Сделки </router-link>
 			</li>
 			<li>
 				<router-link :to="{ name: 'Help' }"> Помощь </router-link>
@@ -27,9 +27,9 @@ export default {
 			logout: () => {
 				store.commit('auth/logout')
 				router.push({ name: 'Auth' })
-			},
+			}
 		}
-	},
+	}
 }
 </script>
 <style lang=""></style>

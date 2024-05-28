@@ -9,10 +9,10 @@
 export default {
 	props: {
 		modalTitle: {
-			type: String,
-		},
+			type: String
+		}
 	},
-	emits: ['close'],
+	emits: ['close']
 }
 </script>
 <style lang=""></style>
