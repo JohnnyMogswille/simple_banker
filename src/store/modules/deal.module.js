@@ -46,6 +46,29 @@ export default {
 					{ root: true }
 				)
 			}
+		},
+		async loadDeal({ commit, dispatch }, payload) {
+			try {
+				const token = store.getters['auth/token']
+				const { data } = await axios.get('/deals.json?auth=' + token)
+				const deals = Object.keys(data).map((key) => ({
+					...data[key],
+					id: key
+				}))
+
+				console.log(deals)
+
+				commit('setDeal', deals)
+			} catch (e) {
+				dispatch(
+					'setMessage',
+					{
+						value: e.message,
+						type: 'danger'
+					},
+					{ root: true }
+				)
+			}
 		}
 	}
 }
