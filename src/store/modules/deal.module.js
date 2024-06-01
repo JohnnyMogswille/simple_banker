@@ -56,8 +56,6 @@ export default {
 					id: key
 				}))
 
-				console.log(deals)
-
 				commit('setDeal', deals)
 			} catch (e) {
 				dispatch(

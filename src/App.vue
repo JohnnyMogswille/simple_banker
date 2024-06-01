@@ -15,8 +15,8 @@ export default {
 		const route = useRoute()
 
 		return {
-			layout: computed(() => route.meta.layout),
+			layout: computed(() => route.meta.layout)
 		}
-	},
+	}
 }
 </script>

@@ -18,9 +18,9 @@
 				<td>{{ index + 1 }}</td>
 				<td>{{ item.contractor }}</td>
 				<td>{{ item.deal }}</td>
-				<td>{{ item.cost }}</td>
+				<td>{{ currency(item.cost) }}</td>
 				<td>{{ item.date }}</td>
-				<td>{{ item.status }}</td>
+				<td><AppStatus :status="item.status" /></td>
 				<td>
 					Действия
 					<!-- <router-link
@@ -37,10 +37,18 @@
 	<h4 v-else class="text-center">Сделок нет</h4>
 </template>
 <script>
+import { currency } from '@/utils/currency'
+import AppStatus from '../ui/AppStatus.vue'
 export default {
+	components: { AppStatus },
 	props: {
 		deals: {
 			type: Array
+		}
+	},
+	setup() {
+		return {
+			currency
 		}
 	}
 }
