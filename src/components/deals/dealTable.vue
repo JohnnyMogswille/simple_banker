@@ -1,3 +1,4 @@
+<!-- eslint-disable vue/no-unused-vars -->
 <!-- eslint-disable vue/html-indent -->
 <!-- eslint-disable vue/max-attributes-per-line -->
 <template lang="">
@@ -22,14 +23,13 @@
 				<td>{{ item.date }}</td>
 				<td><AppStatus :status="item.status" /></td>
 				<td>
-					Действия
-					<!-- <router-link
+					<router-link
 						v-slot="{ navigate }"
 						custom
 						:to="{ name: 'Deal', params: { id: item.id } }"
 					>
-						<button class="btn primary" @click="navigate">Перейти</button>
-					</router-link> -->
+						<button class="btn" @click="navigate">Перейти</button>
+					</router-link>
 				</td>
 			</tr>
 		</tbody>

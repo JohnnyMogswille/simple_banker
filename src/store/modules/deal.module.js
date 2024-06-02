@@ -47,16 +47,33 @@ export default {
 				)
 			}
 		},
-		async loadDeal({ commit, dispatch }, payload) {
+		async loadDeals({ commit, dispatch }, payload) {
 			try {
 				const token = store.getters['auth/token']
-				const { data } = await axios.get('/deals.json?auth=' + token)
+				const { data } = await axios.get(`/deals.json?auth=${token}`)
 				const deals = Object.keys(data).map((key) => ({
 					...data[key],
 					id: key
 				}))
 
 				commit('setDeal', deals)
+			} catch (e) {
+				dispatch(
+					'setMessage',
+					{
+						value: e.message,
+						type: 'danger'
+					},
+					{ root: true }
+				)
+			}
+		},
+		async loadDealById({ commit, dispatch }, id) {
+			try {
+				const token = store.getters['auth/token']
+				const { data } = await axios.get(`/deals/${id}.json?auth=${token}`)
+
+				return data
 			} catch (e) {
 				dispatch(
 					'setMessage',

@@ -47,7 +47,7 @@ export default {
 
 		onMounted(async () => {
 			loading.value = true
-			await store.dispatch('deal/loadDeal')
+			await store.dispatch('deal/loadDeals')
 			setTimeout(() => {
 				loading.value = false
 			}, 1000)

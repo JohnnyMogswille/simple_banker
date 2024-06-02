@@ -8,8 +8,17 @@ const routes = [
 		component: () => import('@/views/HomeView.vue'),
 		meta: {
 			layout: 'main',
-			auth: true,
-		},
+			auth: true
+		}
+	},
+	{
+		path: '/deals/:id',
+		name: 'Deal',
+		component: () => import('@/views/DealView.vue'),
+		meta: {
+			layout: 'main',
+			auth: true
+		}
 	},
 	{
 		path: '/help',
@@ -17,8 +26,8 @@ const routes = [
 		component: () => import('@/views/HelpView.vue'),
 		meta: {
 			layout: 'main',
-			auth: true,
-		},
+			auth: true
+		}
 	},
 	{
 		path: '/auth',
@@ -26,16 +35,16 @@ const routes = [
 		component: () => import('@/views/AuthView.vue'),
 		meta: {
 			layout: 'auth',
-			auth: false,
-		},
-	},
+			auth: false
+		}
+	}
 ]
 
 const router = createRouter({
 	history: createWebHistory(process.env.BASE_URL),
 	routes,
 	linkActiveClass: 'active',
-	linkExactActiveClass: 'active',
+	linkExactActiveClass: 'active'
 })
 
 router.beforeEach((to, from, next) => {
