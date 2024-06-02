@@ -5,6 +5,7 @@
 		<template #header>
 			<button class="btn primary" @click="modal = true">Создать</button>
 		</template>
+		<deal-filter v-model="filter" />
 		<dealTable :deals="deals" />
 	</app-page>
 
@@ -23,17 +24,26 @@
 import { ref, computed, onMounted } from 'vue'
 import { useStore } from 'vuex'
 import AppPage from '@/components/ui/AppPage.vue'
-import dealTable from '@/components/deals/dealTable.vue'
+import DealTable from '@/components/deals/DealTable.vue'
 import AppModal from '@/components/ui/AppModal.vue'
-import dealModal from '@/components/deals/dealModal.vue'
+import DealModal from '@/components/deals/DealModal.vue'
 import AppLoader from '@/components/ui/AppLoader.vue'
+import DealFilter from '@/components/deals/DealFilter.vue'
 
 export default {
-	components: { AppPage, dealTable, AppModal, dealModal, AppLoader },
+	components: {
+		AppPage,
+		DealTable,
+		AppModal,
+		DealModal,
+		AppLoader,
+		DealFilter
+	},
 	setup() {
 		const modal = ref(false)
 		const store = useStore()
 		const loading = ref(false)
+		const filter = ref({})
 
 		onMounted(async () => {
 			loading.value = true
@@ -43,12 +53,27 @@ export default {
 			}, 1000)
 		})
 
-		const deals = computed(() => store.getters['deal/deals'])
+		const deals = computed(() =>
+			store.getters['deal/deals']
+				.filter((deal) => {
+					if (filter.value?.contractor) {
+						return deal.contractor.includes(filter.value.contractor)
+					}
+					return deal
+				})
+				.filter((deal) => {
+					if (filter.value?.status) {
+						return filter.value.status === deal.status
+					}
+					return deal
+				})
+		)
 
 		return {
 			modal,
 			deals,
-			loading
+			loading,
+			filter
 		}
 	}
 }
