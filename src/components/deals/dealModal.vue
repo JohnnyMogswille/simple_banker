@@ -33,12 +33,7 @@
 		<!-- Статус -->
 		<div class="form-control">
 			<label for="status">Статус</label>
-			<select v-model="status" for="status">
-				<option value="done">Завершено</option>
-				<option value="canceled">Отменено</option>
-				<option value="active">Активно</option>
-				<option value="pending">Выполняется</option>
-			</select>
+			<status-select v-model="status" />
 		</div>
 		<!-- Добавить -->
 		<button class="btn primary" type="submit" :disabled="isSubmitting">
@@ -49,8 +44,10 @@
 <script>
 import { useStore } from 'vuex'
 import { useDealsForm } from '@/use/deals-form.js'
+import StatusSelect from '@/components/ui/deal/StatusSelect.vue'
 
 export default {
+	components: { StatusSelect },
 	emits: ['createDeal'],
 	setup(_, { emit }) {
 		const store = useStore()
