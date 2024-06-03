@@ -10,7 +10,7 @@ export default {
 			type: String,
 			required: true,
 			validator(value) {
-				return ['active', 'done', 'cancelled', 'pending'].includes(value)
+				return ['active', 'done', 'canceled', 'pending'].includes(value)
 			}
 		}
 	},
@@ -18,13 +18,13 @@ export default {
 		const classesMap = {
 			active: 'primary',
 			done: 'primaty',
-			cancelled: 'danger',
+			canceled: 'danger',
 			pending: 'warning'
 		}
 		const textMap = {
 			active: 'Активен',
 			done: 'Завершен',
-			cancelled: 'Отменен',
+			canceled: 'Отменен',
 			pending: 'Выполняется'
 		}
 

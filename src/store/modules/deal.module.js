@@ -18,6 +18,12 @@ export default {
 		},
 		addDeal(state, deal) {
 			state.deals.push(deal)
+		},
+		updateDeal(state, updatedDeal) {
+			const index = state.deals.findIndex((deal) => deal.id === updatedDeal.id)
+			if (index !== -1) {
+				state.deals.splice(index, 1, updatedDeal)
+			}
 		}
 	},
 	actions: {
@@ -68,12 +74,63 @@ export default {
 				)
 			}
 		},
-		async loadDealById({ commit, dispatch }, id) {
+		async loadDealById({ dispatch }, id) {
 			try {
 				const token = store.getters['auth/token']
 				const { data } = await axios.get(`/deals/${id}.json?auth=${token}`)
 
 				return data
+			} catch (e) {
+				dispatch(
+					'setMessage',
+					{
+						value: e.message,
+						type: 'danger'
+					},
+					{ root: true }
+				)
+			}
+		},
+		async removeDeal({ dispatch }, id) {
+			try {
+				const token = store.getters['auth/token']
+
+				await axios.delete(`/deals/${id}.json?auth=${token}`)
+				dispatch(
+					'setMessage',
+					{
+						value: 'Сделка успешна удалена',
+						type: 'primary'
+					},
+					{ root: true }
+				)
+			} catch (e) {
+				dispatch(
+					'setMessage',
+					{
+						value: e.message,
+						type: 'danger'
+					},
+					{ root: true }
+				)
+			}
+		},
+		async updateDeal({ dispatch }, payload) {
+			try {
+				const token = store.getters['auth/token']
+				const { data } = await axios.put(
+					`/deals/${payload.id}.json?auth=${token}`,
+					payload
+				)
+
+				dispatch(
+					'setMessage',
+					{
+						value: 'Сделка успешна обновлена',
+						type: 'primary'
+					},
+					{ root: true }
+				)
 			} catch (e) {
 				dispatch(
 					'setMessage',
