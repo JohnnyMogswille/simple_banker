@@ -18,12 +18,6 @@ export default {
 		},
 		addDeal(state, deal) {
 			state.deals.push(deal)
-		},
-		updateDeal(state, updatedDeal) {
-			const index = state.deals.findIndex((deal) => deal.id === updatedDeal.id)
-			if (index !== -1) {
-				state.deals.splice(index, 1, updatedDeal)
-			}
 		}
 	},
 	actions: {
@@ -115,7 +109,7 @@ export default {
 				)
 			}
 		},
-		async updateDeal({ dispatch }, payload) {
+		async updateDeal({ commit, dispatch }, payload) {
 			try {
 				const token = store.getters['auth/token']
 				const { data } = await axios.put(
@@ -131,6 +125,7 @@ export default {
 					},
 					{ root: true }
 				)
+				return { ...data, id: payload.id }
 			} catch (e) {
 				dispatch(
 					'setMessage',

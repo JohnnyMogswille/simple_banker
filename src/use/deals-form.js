@@ -1,7 +1,7 @@
 import * as yup from 'yup'
 import { useForm, useField } from 'vee-validate'
 
-export function useDealsForm(fn) {
+export function useDealsForm(fn, initialValues = {}) {
 	const { handleSubmit, isSubmitting } = useForm()
 
 	// Подрядчик
@@ -11,7 +11,8 @@ export function useDealsForm(fn) {
 		handleBlur: contractorBlur
 	} = useField(
 		'contractor',
-		yup.string().trim().required('Пожалуйста, введите подрядчика')
+		yup.string().trim().required('Пожалуйста, введите подрядчика'),
+		{ initialValue: initialValues.contractor }
 	)
 	// Наименование сделки
 	const {
@@ -20,7 +21,8 @@ export function useDealsForm(fn) {
 		handleBlur: dealBlur
 	} = useField(
 		'deal',
-		yup.string().trim().required('Пожалуйста, введите наименование сделки')
+		yup.string().trim().required('Пожалуйста, введите наименование сделки'),
+		{ initialValue: initialValues.deal }
 	)
 	// Сумма сделки
 	const {
@@ -32,16 +34,21 @@ export function useDealsForm(fn) {
 		yup
 			.number()
 			.required('Пожалуйста, введите сумму')
-			.min(0, 'Сумма не может быть меньше 0')
+			.min(0, 'Сумма не может быть меньше 0'),
+		{ initialValue: initialValues.cost }
 	)
 	// Дата сделки
 	const {
 		value: date,
 		errorMessage: dateError,
 		handleBlur: dateBlur
-	} = useField('date', yup.date().required('Пожалуйста, введите дату'))
+	} = useField('date', yup.date().required('Пожалуйста, введите дату'), {
+		initialValue: initialValues.date
+	})
 	// Статус
-	const { value: status } = useField('status')
+	const { value: status } = useField('status', yup.string().default('active'), {
+		initialValue: initialValues.status
+	})
 
 	const onSubmit = handleSubmit(fn)
 

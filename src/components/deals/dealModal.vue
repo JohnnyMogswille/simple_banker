@@ -43,20 +43,46 @@
 </template>
 <script>
 import { useStore } from 'vuex'
+import { useRoute } from 'vue-router'
 import { useDealsForm } from '@/use/deals-form.js'
 import StatusSelect from '@/components/ui/deal/StatusSelect.vue'
 
 export default {
 	components: { StatusSelect },
-	emits: ['createDeal'],
-	setup(_, { emit }) {
-		const store = useStore()
-		const submit = async (values) => {
-			await store.dispatch('deal/createDeal', values)
-			emit('createDeal')
+	props: {
+		isUpdate: {
+			type: Boolean,
+			default: false
+		},
+		dealObject: {
+			type: Object,
+			default: () => ({})
 		}
+	},
+	emits: ['createDeal', 'updateDeal'],
+	// eslint-disable-next-line no-unused-vars
+	setup(props, { emit }) {
+		// eslint-disable-next-line no-unused-vars
+		const store = useStore()
+		const route = useRoute()
+
+		const submit = async (values) => {
+			if (props.isUpdate) {
+				const id = route.params.id
+				const deal = await store.dispatch('deal/updateDeal', { id, ...values })
+
+				emit('updateDeal', deal)
+			} else {
+				await store.dispatch('deal/createDeal', values)
+				emit('createDeal')
+			}
+		}
+
+		const { onSubmit, ...formValues } = useDealsForm(submit, props.dealObject)
+
 		return {
-			...useDealsForm(submit)
+			onSubmit,
+			...formValues
 		}
 	}
 }
