@@ -8,7 +8,9 @@
 			<li>
 				<router-link :to="{ name: 'Help' }"> Помощь </router-link>
 			</li>
-			<li><a href="#">Сообщения</a></li>
+			<li>
+				<a href="#" @click.prevent="openSidebar">Сообщения</a>
+			</li>
 			<li>
 				<a href="#" @click.prevent="logout">Выход</a>
 			</li>
@@ -27,7 +29,8 @@ export default {
 			logout: () => {
 				store.commit('auth/logout')
 				router.push({ name: 'Auth' })
-			}
+			},
+			openSidebar: () => store.commit('sidebar/openSidebar')
 		}
 	}
 }

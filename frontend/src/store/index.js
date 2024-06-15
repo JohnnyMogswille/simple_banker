@@ -1,6 +1,7 @@
 import { createStore, createLogger } from 'vuex'
 import auth from './modules/auth.module'
 import deal from './modules/deal.module'
+import sidebar from './modules/sidebar.module'
 
 const plugins = []
 
@@ -34,6 +35,7 @@ export default createStore({
 	},
 	modules: {
 		auth,
-		deal
+		deal,
+		sidebar
 	}
 })
