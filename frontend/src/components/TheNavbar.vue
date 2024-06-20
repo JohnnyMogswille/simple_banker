@@ -27,7 +27,7 @@ export default {
 		const store = useStore()
 		return {
 			logout: () => {
-				store.commit('auth/logout')
+				store.dispatch('auth/logout')
 				router.push({ name: 'Auth' })
 			},
 			openSidebar: () => store.commit('sidebar/openSidebar')

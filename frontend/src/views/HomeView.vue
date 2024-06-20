@@ -47,7 +47,8 @@ export default {
 
 		onMounted(async () => {
 			loading.value = true
-			await store.dispatch('deal/loadDeals')
+			console.log('Все хорошо, мы вошли в систему!')
+			// await store.dispatch('deal/loadDeals')
 			setTimeout(() => {
 				loading.value = false
 			}, 1000)

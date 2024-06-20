@@ -54,7 +54,7 @@ export function useLoginForm() {
 	const onSubmit = handleSubmit(async (values) => {
 		try {
 			await store.dispatch('auth/login', values)
-			// router.push({ name: 'Home' })
+			router.push({ name: 'Home' })
 			// eslint-disable-next-line no-empty
 		} catch (error) {}
 	})

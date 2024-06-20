@@ -26,9 +26,10 @@ export default {
 			localStorage.setItem(JWT_TOKEN, tokenData.access)
 			Cookies.set(REFRESH_TOKEN, tokenData.refresh)
 		},
-		logout(state) {
+		dropToken(state) {
 			state.token = null
 			localStorage.removeItem(JWT_TOKEN)
+			Cookies.remove(REFRESH_TOKEN)
 		}
 	},
 	actions: {
@@ -41,12 +42,10 @@ export default {
 					...payload
 				})
 
-				console.log(data)
 				commit('setToken', data)
 
-				// commit('clearMessage', null, { root: true })
+				commit('clearMessage', null, { root: true })
 			} catch (e) {
-				console.error(e)
 				dispatch(
 					'setMessage',
 					{
@@ -58,6 +57,17 @@ export default {
 
 				// throw new Error(e)
 			}
+		},
+		async logout({ commit, dispatch }) {
+			commit('dropToken')
+			dispatch(
+				'setMessage',
+				{
+					value: 'Вы вышли из системы. Возвращайтесь(',
+					type: 'primary'
+				},
+				{ root: true }
+			)
 		}
 	}
 }

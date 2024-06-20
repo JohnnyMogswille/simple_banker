@@ -30,9 +30,6 @@
 		>
 			Войти
 		</button>
-		<button class="btn primary" type="button" @click="sendRequest">
-			Запросить данные
-		</button>
 		<div v-if="isManyAttempts" class="text-danger">
 			Вы слишком часто пытаетесь войти в систему. Попробуйте позже
 		</div>
@@ -43,7 +40,6 @@ import { useRoute } from 'vue-router'
 import { useStore } from 'vuex'
 import { useLoginForm } from '@/use/login-form'
 import errorAuth from '@/utils/errorAuth'
-import apiClient from '@/use/api-client'
 
 export default {
 	setup() {
@@ -57,21 +53,7 @@ export default {
 			})
 		}
 
-		const sendRequest = async () => {
-			const url = 'api/'
-
-			try {
-				const { data } = await apiClient.get(url)
-
-				console.log(data)
-
-				// commit('clearMessage', null, { root: true })
-			} catch (e) {
-				console.log('Да, в authView есть ошибка')
-			}
-		}
-
-		return { ...useLoginForm(), sendRequest }
+		return { ...useLoginForm() }
 	}
 }
 </script>

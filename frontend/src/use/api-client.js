@@ -17,8 +17,6 @@ const updateToken = async () => {
 		if (!refreshToken) {
 			console.error('В cookies нет refresh токена')
 
-			store.commit('auth/logout')
-
 			return null
 		}
 		// Пытаемся обновить токен
@@ -35,7 +33,7 @@ const updateToken = async () => {
 	} catch (error) {
 		console.error('С refresh токеном возникла ошибка:', error)
 
-		store.commit('auth/logout')
+		store.dispatch('auth/logout')
 
 		return null
 	}
