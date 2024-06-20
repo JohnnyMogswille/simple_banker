@@ -1,13 +1,15 @@
-import axios from 'axios'
-import errorAuth from '../../utils/errorAuth'
+import apiClient from '@/use/api-client'
+import Cookies from 'js-cookie'
+// import errorAuth from '../../utils/errorAuth'
 
-const JWT_TOKEN = 'jwt-token'
+const JWT_TOKEN = 'access_token'
+const REFRESH_TOKEN = 'refresh_token'
 
 export default {
 	namespaced: true,
 	state() {
 		return {
-			token: localStorage.getItem(JWT_TOKEN),
+			token: localStorage.getItem(JWT_TOKEN)
 		}
 	},
 	getters: {
@@ -16,44 +18,46 @@ export default {
 		},
 		isAuthenticated(_, getters) {
 			return !!getters.token
-		},
+		}
 	},
 	mutations: {
-		setToken(state, token) {
-			state.token = token
-			localStorage.setItem(JWT_TOKEN, token)
+		setToken(state, tokenData) {
+			state.token = tokenData.access
+			localStorage.setItem(JWT_TOKEN, tokenData.access)
+			Cookies.set(REFRESH_TOKEN, tokenData.refresh)
 		},
 		logout(state) {
 			state.token = null
 			localStorage.removeItem(JWT_TOKEN)
-		},
+		}
 	},
 	actions: {
 		// eslint-disable-next-line no-unused-vars
-		async login({ commit, dispatch }, payload) {
-			const API_KEY = process.env.VUE_APP_FB_KEY
-			const url = `https://identitytoolkit.googleapis.com/v1/accounts:signInWithPassword?key=${API_KEY}`
+		async login({ commit, dispatch, getters }, payload) {
+			const url = 'auth/api/token/'
 
 			try {
-				const { data } = await axios.post(url, {
-					...payload,
-					returnSecureToken: true,
+				const { data } = await apiClient.post(url, {
+					...payload
 				})
 
-				commit('setToken', data.idToken)
-				commit('clearMessage', null, { root: true })
+				console.log(data)
+				commit('setToken', data)
+
+				// commit('clearMessage', null, { root: true })
 			} catch (e) {
+				console.error(e)
 				dispatch(
 					'setMessage',
 					{
-						value: errorAuth(e.response.data.error.message),
-						type: 'danger',
+						value: e.response.data.detail,
+						type: 'danger'
 					},
 					{ root: true }
 				)
 
-				throw new Error()
+				// throw new Error(e)
 			}
-		},
-	},
+		}
+	}
 }

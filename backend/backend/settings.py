@@ -167,6 +167,7 @@ DATETIME_INPUT_FORMATS = ['%Y-%m-%d %H:%M:%S', '%d.%m.%Y %H:%M:%S']
 
 
 CORS_ALLOWED_ORIGINS = os.environ.get('CORS_ALLOWED_ORIGINS').split(',')
+CORS_ORIGIN_WHITELIST = os.environ.get('CORS_ALLOWED_ORIGINS').split(',')
 
 # Если вы используете куки для аутентификации
 CORS_ALLOW_CREDENTIALS = os.environ.get('CORS_ALLOW_CREDENTIALS') == 'True'
