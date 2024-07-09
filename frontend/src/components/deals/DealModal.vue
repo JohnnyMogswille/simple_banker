@@ -37,7 +37,7 @@
 		</div>
 		<!-- Добавить -->
 		<button class="btn primary" type="submit" :disabled="isSubmitting">
-			Добавить
+			{{ btnTitle }}
 		</button>
 	</form>
 </template>
@@ -57,6 +57,9 @@ export default {
 		dealObject: {
 			type: Object,
 			default: () => ({})
+		},
+		btnTitle: {
+			type: String
 		}
 	},
 	emits: ['createDeal', 'updateDeal'],

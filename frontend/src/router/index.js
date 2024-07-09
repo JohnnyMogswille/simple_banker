@@ -8,7 +8,8 @@ const routes = [
 		component: () => import('@/views/HomeView.vue'),
 		meta: {
 			layout: 'main',
-			auth: true
+			auth: true,
+			requiredGroups: ['admins', 'dealStaff']
 		}
 	},
 	{
@@ -51,6 +52,8 @@ router.beforeEach((to, from, next) => {
 	const requiredAuth = to.meta.auth
 
 	if (requiredAuth && store.getters['auth/isAuthenticated']) {
+		// console.log('Вот тут нужно проверить группы: ', to.meta.requiredGroups)
+		// console.log('А у нас такие группы: ', store.getters['auth/userGroups'])
 		next()
 	} else if (requiredAuth && !store.getters['auth/isAuthenticated']) {
 		next('/auth?message=auth')

@@ -13,6 +13,7 @@ class AppUserAdmin(UserAdmin):
     'first_name',
     'middle_name',
     'last_name',
+    'is_superuser',
     'is_staff',
     'is_active',
   ]

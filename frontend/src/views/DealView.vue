@@ -22,10 +22,15 @@
 		/>
 		<app-modal
 			v-if="modal"
-			modal-title="Добавить сделку"
+			modal-title="Обновить сделку"
 			@close="modal = false"
 		>
-			<deal-modal :is-update="true" :deal-object="deal" @updateDeal="update" />
+			<deal-modal
+				:is-update="true"
+				:btn-title="'Обновить сделку'"
+				:deal-object="deal"
+				@updateDeal="update"
+			/>
 		</app-modal>
 	</teleport>
 </template>

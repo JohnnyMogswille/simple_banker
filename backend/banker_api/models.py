@@ -1,6 +1,6 @@
 from django.db import models
 
-# Create your models here.
+from .api import pathes
 
 
 class Deal(models.Model):
@@ -27,6 +27,9 @@ class Deal(models.Model):
     null=False,
     verbose_name='Статус сделки',
     choices=DEAL_STATUS,
+  )
+  docs = models.FileField(
+    upload_to=pathes.set_path_to_docs, null=True, blank=True, verbose_name='Документы'
   )
   date_log = models.DateTimeField(
     blank=False, null=False, verbose_name='Дата внесения изменений', auto_now=True

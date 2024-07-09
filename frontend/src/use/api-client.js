@@ -1,6 +1,8 @@
 import axios from 'axios'
 import Cookies from 'js-cookie'
 import store from '@/store'
+import router from '@/router'
+import { jwtDecode } from 'jwt-decode'
 
 const baseURL = process.env.VUE_APP_REST_API_URL
 
@@ -16,6 +18,7 @@ const updateToken = async () => {
 		// Если нет refresh токена, то выходим из системы
 		if (!refreshToken) {
 			console.error('В cookies нет refresh токена')
+			router.push({ name: 'Auth' })
 
 			return null
 		}
@@ -26,7 +29,11 @@ const updateToken = async () => {
 		})
 		// Если все хорошо, то возвращаем новый токен
 		if (response.status === 200) {
+			const decoded = jwtDecode(response.data.access)
+
+			console.log(decoded)
 			store.commit('auth/setToken', response.data)
+			store.commit('auth/setUserGroups', decoded.groups)
 
 			return response.data.access
 		}
@@ -62,6 +69,7 @@ apiClient.interceptors.response.use(
 	async (error) => {
 		// Получаем статус ошибки
 		const status = error.response ? error.response.status : null
+
 		// Если статус 401, то обновляем токен
 		if (status === 401) {
 			// Пытаемся обновить токен

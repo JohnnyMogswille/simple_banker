@@ -15,7 +15,7 @@
 			modal-title="Добавить сделку"
 			@close="modal = false"
 		>
-			<deal-modal @createDeal="modal = false" />
+			<deal-modal @createDeal="modal = false" :btn-title="'Добавить сделку'" />
 		</app-modal>
 	</teleport>
 </template>
@@ -47,8 +47,8 @@ export default {
 
 		onMounted(async () => {
 			loading.value = true
-			console.log('Все хорошо, мы вошли в систему!')
-			// await store.dispatch('deal/loadDeals')
+			// console.log('Все хорошо, мы вошли в систему!')
+			await store.dispatch('deal/loadDeals')
 			setTimeout(() => {
 				loading.value = false
 			}, 1000)

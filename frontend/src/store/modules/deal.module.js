@@ -1,5 +1,5 @@
 /* eslint-disable no-unused-vars */
-import axios from '../../axios/request'
+import apiClient from '@/use/api-client'
 import store from '../index'
 
 export default {
@@ -23,11 +23,9 @@ export default {
 	actions: {
 		async createDeal({ commit, dispatch }, payload) {
 			try {
-				const token = store.getters['auth/token']
+				const { data } = await apiClient.post('api/banker/deals/', payload)
 
-				const { data } = await axios.post('/deals.json?auth=' + token, payload)
-
-				commit('addDeal', { ...payload, id: data.name })
+				commit('addDeal', data)
 				dispatch(
 					'setMessage',
 					{
@@ -47,21 +45,17 @@ export default {
 				)
 			}
 		},
-		async loadDeals({ commit, dispatch }, payload) {
+		async loadDeals({ commit, dispatch }) {
 			try {
-				const token = store.getters['auth/token']
-				const { data } = await axios.get(`/deals.json?auth=${token}`)
-				const deals = Object.keys(data).map((key) => ({
-					...data[key],
-					id: key
-				}))
+				// const token = store.getters['auth/token']
+				const { data } = await apiClient.get('api/banker/deals/')
 
-				commit('setDeal', deals)
+				commit('setDeal', data)
 			} catch (e) {
 				dispatch(
 					'setMessage',
 					{
-						value: e.message,
+						value: e.response.data.detail,
 						type: 'danger'
 					},
 					{ root: true }
@@ -70,8 +64,7 @@ export default {
 		},
 		async loadDealById({ dispatch }, id) {
 			try {
-				const token = store.getters['auth/token']
-				const { data } = await axios.get(`/deals/${id}.json?auth=${token}`)
+				const { data } = await apiClient.get(`api/banker/deals/${id}`)
 
 				return data
 			} catch (e) {
@@ -87,9 +80,7 @@ export default {
 		},
 		async removeDeal({ dispatch }, id) {
 			try {
-				const token = store.getters['auth/token']
-
-				await axios.delete(`/deals/${id}.json?auth=${token}`)
+				await apiClient.delete(`api/banker/deals/${id}`)
 				dispatch(
 					'setMessage',
 					{
@@ -111,9 +102,8 @@ export default {
 		},
 		async updateDeal({ commit, dispatch }, payload) {
 			try {
-				const token = store.getters['auth/token']
-				const { data } = await axios.put(
-					`/deals/${payload.id}.json?auth=${token}`,
+				const { data } = await apiClient.put(
+					`api/banker/deals/${payload.id}/`,
 					payload
 				)
 

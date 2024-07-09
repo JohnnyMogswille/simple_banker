@@ -11,6 +11,7 @@
 				<th>Сумма, руб</th>
 				<th>Дата покупки</th>
 				<th>Статус</th>
+				<th>Документы</th>
 				<th>Действия</th>
 			</tr>
 		</thead>
@@ -22,6 +23,10 @@
 				<td>{{ currency(item.cost) }}</td>
 				<td>{{ item.date }}</td>
 				<td><AppStatus :status="item.status" /></td>
+				<td>
+					<button v-if="item.docs" class="btn">Скачать</button>
+					<span v-else>Нет данных</span>
+				</td>
 				<td>
 					<router-link
 						v-slot="{ navigate }"

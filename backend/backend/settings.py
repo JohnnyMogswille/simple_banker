@@ -184,10 +184,11 @@ REST_FRAMEWORK = {
   'DEFAULT_AUTHENTICATION_CLASSES': (
     'rest_framework_simplejwt.authentication.JWTAuthentication',
   ),
+  'EXCEPTION_HANDLER': 'auth_app.exceptions.custom_exception_handler',
 }
 
 SIMPLE_JWT = {
-  'ACCESS_TOKEN_LIFETIME': timedelta(minutes=5),  # Время жизни access токена
+  'ACCESS_TOKEN_LIFETIME': timedelta(minutes=1),  # Время жизни access токена
   'REFRESH_TOKEN_LIFETIME': timedelta(days=1),  # Время жизни refresh токена
   'ROTATE_REFRESH_TOKENS': True,  # Генерация нового refresh токена при обновлении access токена
   'BLACKLIST_AFTER_ROTATION': True,  # Блэклистинг старых refresh токенов после их обновления
