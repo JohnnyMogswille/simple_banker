@@ -92,3 +92,16 @@ apiClient.interceptors.response.use(
 )
 
 export default apiClient
+
+export const getFormData = (data) => {
+	const formData = new FormData()
+
+	Object.keys(data).reduce((acc, key) => {
+		console.log(key, data[key])
+		if (data[key] !== null) {
+			formData.append(key, data[key])
+		}
+	}, {})
+
+	return formData
+}

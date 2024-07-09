@@ -7,7 +7,13 @@
 		<p><strong>Наименование сделки: </strong>{{ deal.deal }}</p>
 		<p><strong>Сумма сделки: </strong>{{ currency(deal.cost) }}</p>
 		<p><strong>Дата сделки: </strong>{{ deal.date }}</p>
+		<p>
+			<strong>Документы: </strong>
+			<button v-if="deal.docs" class="btn">Скачать</button>
+			<span v-else>Нет данных</span>
+		</p>
 		<p><strong>Статус: </strong><app-status :status="deal.status" /></p>
+
 		<button class="btn" @click="modal = true">Обновить</button>
 		<button class="btn danger" @click="confirmMessage = true">Удалить</button>
 	</app-page>

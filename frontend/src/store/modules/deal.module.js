@@ -1,6 +1,6 @@
 /* eslint-disable no-unused-vars */
 import apiClient from '@/use/api-client'
-import store from '../index'
+import { getFormData } from '@/use/api-client'
 
 export default {
 	namespaced: true,
@@ -22,8 +22,9 @@ export default {
 	},
 	actions: {
 		async createDeal({ commit, dispatch }, payload) {
+			const formData = getFormData(payload)
 			try {
-				const { data } = await apiClient.post('api/banker/deals/', payload)
+				const { data } = await apiClient.post('api/banker/deals/', formData)
 
 				commit('addDeal', data)
 				dispatch(
@@ -47,7 +48,6 @@ export default {
 		},
 		async loadDeals({ commit, dispatch }) {
 			try {
-				// const token = store.getters['auth/token']
 				const { data } = await apiClient.get('api/banker/deals/')
 
 				commit('setDeal', data)
@@ -101,10 +101,12 @@ export default {
 			}
 		},
 		async updateDeal({ commit, dispatch }, payload) {
+			const formData = getFormData(payload)
+
 			try {
 				const { data } = await apiClient.put(
 					`api/banker/deals/${payload.id}/`,
-					payload
+					formData
 				)
 
 				dispatch(
@@ -117,6 +119,7 @@ export default {
 				)
 				return { ...data, id: payload.id }
 			} catch (e) {
+				console.log(e)
 				dispatch(
 					'setMessage',
 					{

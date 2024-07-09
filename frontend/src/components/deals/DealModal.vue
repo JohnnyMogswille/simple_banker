@@ -35,6 +35,11 @@
 			<label for="status">Статус</label>
 			<status-select v-model="status" />
 		</div>
+		<!-- Документы -->
+		<div class="form-control">
+			<label for="docs">Документы</label>
+			<input id="docs" type="file" @change="docsChange" />
+		</div>
 		<!-- Добавить -->
 		<button class="btn primary" type="submit" :disabled="isSubmitting">
 			{{ btnTitle }}
@@ -42,6 +47,7 @@
 	</form>
 </template>
 <script>
+import { ref } from 'vue'
 import { useStore } from 'vuex'
 import { useRoute } from 'vue-router'
 import { useDealsForm } from '@/use/deals-form.js'
@@ -59,24 +65,41 @@ export default {
 			default: () => ({})
 		},
 		btnTitle: {
-			type: String
+			type: String,
+			default: 'Добавить сделку'
 		}
 	},
 	emits: ['createDeal', 'updateDeal'],
 	// eslint-disable-next-line no-unused-vars
 	setup(props, { emit }) {
 		// eslint-disable-next-line no-unused-vars
+		const file = ref(null)
 		const store = useStore()
 		const route = useRoute()
+
+		const docsChange = (event) => {
+			file.value = event.target.files[0]
+		}
 
 		const submit = async (values) => {
 			if (props.isUpdate) {
 				const id = route.params.id
-				const deal = await store.dispatch('deal/updateDeal', { id, ...values })
+				const deal = await store.dispatch('deal/updateDeal', {
+					id,
+					...values,
+					...{
+						docs: file.value
+					}
+				})
 
 				emit('updateDeal', deal)
 			} else {
-				await store.dispatch('deal/createDeal', values)
+				await store.dispatch('deal/createDeal', {
+					...values,
+					...{
+						docs: file.value
+					}
+				})
 				emit('createDeal')
 			}
 		}
@@ -84,6 +107,7 @@ export default {
 		const { onSubmit, ...formValues } = useDealsForm(submit, props.dealObject)
 
 		return {
+			docsChange,
 			onSubmit,
 			...formValues
 		}
