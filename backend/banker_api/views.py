@@ -2,9 +2,11 @@ from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework.permissions import IsAuthenticated
 from rest_framework_simplejwt.authentication import JWTAuthentication
+from rest_framework.exceptions import PermissionDenied
 from rest_framework import viewsets
 from banker_api.models import Deal
 from banker_api.serializers import DealSerializer
+from permissions.permissions import BankerPermissions
 
 
 class Home(APIView):
@@ -18,7 +20,7 @@ class Home(APIView):
 
 class UniversalViewSet(viewsets.ModelViewSet):
   authentication_classes = [JWTAuthentication]
-  permission_classes = [IsAuthenticated]
+  permission_classes = [BankerPermissions]
 
   def __call__(self, *args, **kwargs):
     return super().__call__(*args, **kwargs)

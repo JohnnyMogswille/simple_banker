@@ -9,8 +9,7 @@
 		<p><strong>Дата сделки: </strong>{{ deal.date }}</p>
 		<p>
 			<strong>Документы: </strong>
-			<button v-if="deal.docs" class="btn">Скачать</button>
-			<span v-else>Нет данных</span>
+			<app-btn-download :docs="deal.docs" />
 		</p>
 		<p><strong>Статус: </strong><app-status :status="deal.status" /></p>
 

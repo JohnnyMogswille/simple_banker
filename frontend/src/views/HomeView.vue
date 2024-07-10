@@ -15,7 +15,7 @@
 			modal-title="Добавить сделку"
 			@close="modal = false"
 		>
-			<deal-modal @createDeal="modal = false" :btn-title="'Добавить сделку'" />
+			<deal-modal :btn-title="'Добавить сделку'" @createDeal="modal = false" />
 		</app-modal>
 	</teleport>
 </template>

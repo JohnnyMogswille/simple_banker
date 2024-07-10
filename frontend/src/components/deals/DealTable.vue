@@ -24,8 +24,7 @@
 				<td>{{ item.date }}</td>
 				<td><AppStatus :status="item.status" /></td>
 				<td>
-					<button v-if="item.docs" class="btn">Скачать</button>
-					<span v-else>Нет данных</span>
+					<app-btn-download :docs="item.docs" />
 				</td>
 				<td>
 					<router-link

@@ -7,6 +7,7 @@
 		<button v-if="isActive" class="btn warning" @click="resetFilter">
 			Очистить
 		</button>
+		<the-button-download />
 	</div>
 </template>
 <script>

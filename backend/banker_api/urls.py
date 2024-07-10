@@ -4,22 +4,25 @@ from .views import UniversalViewSet, Home
 from .models import *
 from .serializers import *
 
+DEAL_GROUPS = ['admins', 'dealStaff']
+
 
 class CustomSimpleRouter(SimpleRouter):
-  def register(self, prefix, viewset, basename, model, serializer):
+  def register(self, prefix, viewset, basename, model, serializer, allowed_groups=None):
     viewset.model = model
     viewset.serializer = serializer
+    viewset.allowed_groups = allowed_groups
     super().register(prefix, viewset, basename)
 
 
-router = DefaultRouter(
-  trailing_slash=False,
-)
-router.register(r'deals', UniversalViewSet, basename='deals')
-
 deal_router = CustomSimpleRouter()
 deal_router.register(
-  r'deals', UniversalViewSet, basename='deal', model=Deal, serializer=DealSerializer
+  r'deals',
+  UniversalViewSet,
+  basename='deal',
+  model=Deal,
+  serializer=DealSerializer,
+  allowed_groups=DEAL_GROUPS,
 )
 
 urlpatterns = [

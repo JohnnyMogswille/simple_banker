@@ -31,7 +31,7 @@ const updateToken = async () => {
 		if (response.status === 200) {
 			const decoded = jwtDecode(response.data.access)
 
-			console.log(decoded)
+			// console.log(decoded)
 			store.commit('auth/setToken', response.data)
 			store.commit('auth/setUserGroups', decoded.groups)
 
