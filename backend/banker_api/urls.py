@@ -1,6 +1,6 @@
 from django.urls import path, include
-from rest_framework.routers import DefaultRouter, SimpleRouter
-from .views import UniversalViewSet, Home
+from rest_framework.routers import SimpleRouter
+from .views import UniversalViewSet, Home, ExportData
 from .models import *
 from .serializers import *
 
@@ -25,7 +25,13 @@ deal_router.register(
   allowed_groups=DEAL_GROUPS,
 )
 
+
 urlpatterns = [
   path('', Home.as_view()),
   path('banker/', include(deal_router.urls)),
+  path(
+    'deals/export/',
+    ExportData.as_view(model=Deal, serializer_class=DealSerializer),
+    name='export_data',
+  ),
 ]

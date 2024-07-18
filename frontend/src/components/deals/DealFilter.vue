@@ -1,3 +1,4 @@
+<!-- eslint-disable vue/html-indent -->
 <template lang="">
 	<div class="filter">
 		<div class="form-control">
@@ -7,7 +8,10 @@
 		<button v-if="isActive" class="btn warning" @click="resetFilter">
 			Очистить
 		</button>
-		<the-button-download />
+		<the-button-download
+			:export-url="'api/deals/export/'"
+			:file-name="'Сделки'"
+		/>
 	</div>
 </template>
 <script>

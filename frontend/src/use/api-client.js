@@ -41,6 +41,7 @@ const updateToken = async () => {
 		console.error('С refresh токеном возникла ошибка:', error)
 
 		store.dispatch('auth/logout')
+		router.push({ name: 'Auth' })
 
 		return null
 	}

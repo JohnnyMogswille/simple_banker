@@ -2,10 +2,10 @@ from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework.permissions import IsAuthenticated
 from rest_framework_simplejwt.authentication import JWTAuthentication
-from rest_framework.exceptions import PermissionDenied
 from rest_framework import viewsets
-from banker_api.models import Deal
+
 from banker_api.serializers import DealSerializer
+from banker_api.api.export_data import ExportDataHelper
 from permissions.permissions import BankerPermissions
 
 
@@ -26,9 +26,23 @@ class UniversalViewSet(viewsets.ModelViewSet):
     return super().__call__(*args, **kwargs)
 
   def get_queryset(self):
-    model = Deal
-    return model.objects.all()
+    return self.model.objects.all()
 
   def get_serializer_class(self):
     serializer = DealSerializer
     return serializer
+
+
+class ExportData(APIView):
+  authentication_classes = [JWTAuthentication]
+  permission_classes = [BankerPermissions]
+
+  model = None
+  serializer_class = None
+
+  def post(self, request):
+    helper = ExportDataHelper(self.model, self.serializer_class)
+    print(helper)
+    response = helper.export_to_xlsx()
+
+    return response

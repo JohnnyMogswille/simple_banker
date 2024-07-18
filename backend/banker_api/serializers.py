@@ -1,10 +1,11 @@
-from rest_framework import serializers
+from base.serializers import BaseSerializer
 
 from banker_api.models import *
 
 
 # Серииализатор для модели Deal
-class DealSerializer(serializers.ModelSerializer):
+class DealSerializer(BaseSerializer):
   class Meta:
     model = Deal
     fields = '__all__'
+    export_fields = '__all__'

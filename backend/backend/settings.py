@@ -178,6 +178,11 @@ CORS_ALLOW_METHODS = os.environ.get('CORS_ALLOW_METHODS').split(',')
 # Разрешение конкретных заголовков HTTP
 CORS_ALLOW_HEADERS = os.environ.get('CORS_ALLOW_HEADERS').split(',')
 
+# CORS_EXPOSE_HEADERS = [
+#   'isValid',
+#   'status',
+# ]
+
 
 REST_FRAMEWORK = {
   'DEFAULT_PERMISSION_CLASSES': ('rest_framework.permissions.IsAuthenticated',),
