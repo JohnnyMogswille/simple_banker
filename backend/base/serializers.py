@@ -112,13 +112,12 @@ class BaseSerializer(serializers.ModelSerializer):
     # Создание ответа
     output_wb = BytesIO()
     result_wb.save(output_wb)
-    result_wb.save('dasdada.xlsx')
     output_wb.seek(0)
 
     response = HttpResponse(
       content=output_wb.getvalue(),
       content_type='application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
     )
-    response['Content-Disposition'] = f'attachment; filename="asda.xlsx"'
+    response['Content-Disposition'] = f'attachment; filename="{filename}"'
 
     return response

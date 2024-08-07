@@ -22,8 +22,7 @@ sys.dont_write_bytecode = True
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
-load_dotenv(os.path.join(BASE_DIR, '.env'))
-
+load_dotenv()
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/5.0/howto/deployment/checklist/
@@ -34,12 +33,16 @@ SECRET_KEY = os.environ.get('SECRET_KEY')
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = os.environ.get('DEBUG') == 'True'
 
-ALLOWED_HOSTS = []
-
+ALLOWED_HOSTS = ['*']
 AUTH_USER_MODEL = 'auth_app.AppUser'
 # Application definition
 
 INSTALLED_APPS = [
+  'unfold',  # before django.contrib.admin
+  'unfold.contrib.filters',  # optional, if special filters are needed
+  'unfold.contrib.forms',  # optional, if special form elements are needed
+  'unfold.contrib.inlines',  # optional, if special inlines are needed
+  'unfold.contrib.import_export',  # optional, if django-import-export package is used
   'django.contrib.admin',
   'django.contrib.auth',
   'django.contrib.contenttypes',
@@ -138,9 +141,9 @@ USE_L10N = False
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/5.0/howto/static-files/
 
-STATIC_URL = '/static/'
-STATIC_ROOT = os.path.join(BASE_DIR, 'static_production')
-STATICFILES_DIRS = (os.path.join(BASE_DIR, 'static'), os.path.join(BASE_DIR, 'logs'))
+STATIC_URL = 'static/'
+STATIC_ROOT = os.path.join(BASE_DIR, STATIC_URL)
+# STATICFILES_DIRS = (os.path.join(BASE_DIR, 'static'), os.path.join(BASE_DIR, 'logs'))
 
 MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media/')

@@ -2,10 +2,12 @@
 node_modules
 /dist
 /env
+/backend/static
 
 
 # local env files
 .env.local
+.env.docker
 .env.*.local
 
 # Log files

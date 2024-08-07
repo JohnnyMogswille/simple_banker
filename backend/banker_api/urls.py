@@ -25,6 +25,8 @@ deal_router.register(
   allowed_groups=DEAL_GROUPS,
 )
 
+# print(deal_router.urls)
+
 
 urlpatterns = [
   path('', Home.as_view()),

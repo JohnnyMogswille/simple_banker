@@ -40,9 +40,8 @@ class ExportData(APIView):
   model = None
   serializer_class = None
 
-  def post(self, request):
+  def get(self, request):
     helper = ExportDataHelper(self.model, self.serializer_class)
-    print(helper)
     response = helper.export_to_xlsx()
 
     return response

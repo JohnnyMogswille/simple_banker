@@ -8,6 +8,9 @@
 import AppMessage from '@/components/ui/AppMessage.vue'
 export default {
 	components: { AppMessage },
+	setup() {
+		document.title = 'Умный банкир'
+	}
 }
 </script>
 <style scoped></style>

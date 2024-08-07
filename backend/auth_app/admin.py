@@ -1,12 +1,14 @@
 from django.contrib import admin
-from django.contrib.auth.admin import UserAdmin
+from unfold.admin import ModelAdmin
+
+# from django.contrib.auth.admin import UserAdmin
 from django.contrib.auth import get_user_model
 
 User = get_user_model()
 
 
 @admin.register(User)
-class AppUserAdmin(UserAdmin):
+class AppUserAdmin(ModelAdmin):
   list_display = [
     'username',
     'email',
@@ -43,7 +45,14 @@ class AppUserAdmin(UserAdmin):
       None,
       {
         'classes': ('wide',),
-        'fields': ('username', 'middle_name', 'password1', 'password2'),
+        'fields': (
+          'first_name',
+          'middle_name',
+          'last_name',
+          'username',
+          'email',
+          'password',
+        ),
       },
     ),
   )

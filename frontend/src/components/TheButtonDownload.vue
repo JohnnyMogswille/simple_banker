@@ -26,11 +26,9 @@ export default {
 		const exportData = async () => {
 			if (url.value) {
 				try {
-					const response = await apiClient.post(
-						url.value,
-						{},
-						{ responseType: 'blob' }
-					)
+					const response = await apiClient.get(url.value, {
+						responseType: 'blob'
+					})
 
 					if (response.status === 200) {
 						const href = URL.createObjectURL(response.data)

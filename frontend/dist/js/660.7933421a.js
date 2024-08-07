@@ -1,2 +1,0 @@
-"use strict";(self["webpackChunksimple_banker"]=self["webpackChunksimple_banker"]||[]).push([[660],{2660:function(n,e,u){u.r(e),u.d(e,{default:function(){return o}});var a=u(6768);const r={class:"about"},s=(0,a.Lk)("h1",null,"This is an about page",-1),t=[s];function c(n,e){return(0,a.uX)(),(0,a.CE)("div",r,t)}var i=u(1241);const l={},k=(0,i.A)(l,[["render",c]]);var o=k}}]);
-//# sourceMappingURL=660.7933421a.js.map
