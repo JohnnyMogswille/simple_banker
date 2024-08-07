@@ -1,24 +1,16 @@
 # simple_banker
 
-## Project setup
-```
-npm install
-```
+Не судите строго, до этого только проекты на django. Этот проект исключительно для тренировки развертывания
+фронта и бэка в докере
 
-### Compiles and hot-reloads for development
-```
-npm run serve
-```
+## Структура
 
-### Compiles and minifies for production
-```
-npm run build
-```
+backend на DRF, frontend на Vue. Все готово для разворачивания в docker
 
-### Lints and fixes files
-```
-npm run lint
-```
+## Запуск
 
-### Customize configuration
-See [Configuration Reference](https://cli.vuejs.org/config/).
+В корне проекта выполнить
+
+```
+docker compose -f compose.dev.yml up --build --watch
+```
